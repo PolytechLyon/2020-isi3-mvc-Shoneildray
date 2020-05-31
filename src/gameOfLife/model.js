@@ -4,9 +4,9 @@ import {
   DEFAULT_ALIVE_PAIRS,
   RENDER_INTERVAL
 } from "./constants";
-import { drawGame, update } from "./view";
 
 export class Model {
+
   constructor() {
     this.width = GAME_SIZE;
     this.height = GAME_SIZE;
@@ -14,13 +14,35 @@ export class Model {
   }
 
   init() {
+    this.listeObservers = new Array(10); // le nombre 10 est arbitraire
+    this.curseurListeObservers = 0;
+
     this.state = Array.from(new Array(this.height), () =>
         Array.from(new Array(this.width), () => CELL_STATES.NONE)
     );
     DEFAULT_ALIVE_PAIRS.forEach(([x, y]) => {
       this.state[y][x] = CELL_STATES.ALIVE;
     });
-    this.updated();
+    this.notifyObservers();
+  }
+
+  ajouterObserver(observer){
+    this.listeObservers[this.curseurListeObservers] = observer;
+    this.curseurListeObservers ++;
+    observer.initView();
+    observer.update(this);
+  }
+
+  reset() {
+    this.stop();
+
+    this.state = Array.from(new Array(this.height), () =>
+        Array.from(new Array(this.width), () => CELL_STATES.NONE)
+    );
+    DEFAULT_ALIVE_PAIRS.forEach(([x, y]) => {
+      this.state[y][x] = CELL_STATES.ALIVE;
+    });
+    this.notifyObservers();
   }
 
   run(date = new Date().getTime()) {
@@ -29,20 +51,17 @@ export class Model {
       if (currentTime - date > RENDER_INTERVAL) {
         let compteur = 0;
         var listeChangements = new Array(this.height*this.width);
-        var notification = new Array(this.height*this.width);
         for (let i = 0; i < this.width; i++) {
           for (let j = 0; j < this.width; j++) {
             const nbAlive = this.aliveNeighbours(i, j);
             if (this.isCellAlive(i,j)){
               if (nbAlive!==2 && nbAlive!==3){
                 listeChangements[compteur] = [i,j,CELL_STATES.DEAD];
-                notification[compteur] = [i,j];
                 compteur ++;
               }
             }
             else if(nbAlive === 3){
               listeChangements[compteur] = [i,j,CELL_STATES.ALIVE];
-              notification[compteur] = [i,j];
               compteur ++;
             }
           }
@@ -50,7 +69,7 @@ export class Model {
         listeChangements.forEach (changement =>
             this.state[changement[1]][changement[0]] = changement[2])
 
-        this.updated2(notification);
+        this.notifyObservers();
         this.run(currentTime);
       } else {
         this.run(date);
@@ -63,15 +82,6 @@ export class Model {
     this.raf = null;
   }
 
-  reset() {
-    this.raf = null;
-    this.state = Array.from(new Array(this.height), () =>
-        Array.from(new Array(this.width), () => CELL_STATES.NONE)
-    );
-
-    this.updated();
-  }
-
   isCellAlive(x, y) {
     return x >= 0 &&
     y >= 0 &&
@@ -81,6 +91,7 @@ export class Model {
         ? 1
         : 0;
   }
+
   aliveNeighbours(x, y) {
     let number = 0;
     for (let i = -1; i<2; i++){
@@ -93,11 +104,8 @@ export class Model {
     return number;
   }
 
-  updated() {
-    drawGame(this);
-  }
-
-  updated2(notification) {
-    update(this, notification);
+  notifyObservers() {
+    this.listeObservers.forEach (observer =>
+        observer.update(this))
   }
 }

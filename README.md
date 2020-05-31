@@ -20,9 +20,9 @@ Il est inventé par [John Horton Conway](https://fr.wikipedia.org/wiki/John_Hort
 1. Expliquer le design pattern MVC à l'aide d'un schéma à insérer directement ici. 
 Utiliser un outils commde Dia pour le représenter. Je veux **votre** schéma, pas un de ceux qu'on peut trouver sur le net.
 
-2. Expliquer ce pattern à l'aide en complétant ce texte.
+2. Expliquer ce pattern en complétant ce texte.
 
-Le pattern MVP, vise à découpler le `modèle`, de la `vue` et du `contrôleur` afin de rendre le code plus `facile à modifier`.
+Le pattern MVC, vise à découpler le `modèle`, de la `vue` et du `contrôleur` afin de rendre le code plus `facile à modifier`.
 Les responsabilités ne sont alors plus `dispersées`.
 On peut ainsi changer l'aspect visuel de son application sans pour autant impacter l'`aspect logiciel`.
 
@@ -40,7 +40,7 @@ On peut ainsi changer l'aspect visuel de son application sans pour autant impact
 Afin de mettre à jour la vue à chaque nouvelle génération du jeu, la fonction `updated` doit notifier la view afin qu'elle se mette à jour.
 En quoi cela relève du design pattern ObserverObservable.
 
-1. Expliquer votre implémentation:
+1. Expliquer votre implémentation :
 
 L'usage d'une callback permet ici de `notifier` afin de dire à la _View_ de se redessiner.
 L'objet _Model_ n'a pas de lien avec `la vue` pourtant grâce à la `callback` il peut notifier la `vue`.

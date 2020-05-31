@@ -1,20 +1,33 @@
-export const controller = model => {
+import { View } from "./view";
+import { Model } from "./model";
+
+export class controller {
+
+  constructor(){
+    this.go();
+  }
+
+  go(){
+
+    let vue = new View();
+    let modele = new Model();
+    modele.init();
+    modele.ajouterObserver(vue);
 
 
-  document.getElementById("start").onclick = function(){
-    model.run();
-  };
+    document.getElementById("start").onclick = function(){
+      modele.run();
+    };
 
 
-  document.getElementById("stop").onclick = function(){
-    model.stop();
-  };
+    document.getElementById("stop").onclick = function(){
+      modele.stop();
+    };
 
 
-  document.getElementById("reset").onclick = function(){
-    model.stop();
-    model.init();
-  };
+    document.getElementById("reset").onclick = function(){
+      modele.reset();
+    };
+  }
 
 };
-

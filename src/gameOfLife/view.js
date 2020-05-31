@@ -1,29 +1,29 @@
 import { GAME_SIZE, CELL_SIZE } from "./constants";
 
-const canvas = document.createElement("canvas");
-const context = canvas.getContext("2d");
+export class View {
 
-const drawCell = (x, y, value) => {
-  context.fillStyle = value;
-  context.fillRect(x + CELL_SIZE * x, y + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-};
+  constructor(modele) {
+    this.canvas = document.createElement("canvas");
+    this.context = this.canvas.getContext("2d");
+  }
 
-export const initView = () => {
-  document.getElementById("game").appendChild(canvas);
-  canvas.setAttribute("height", GAME_SIZE * CELL_SIZE + GAME_SIZE - 1);
-  canvas.setAttribute("width", GAME_SIZE * CELL_SIZE + GAME_SIZE - 1);
-};
+  drawCell (x, y, value) {
+    this.context.fillStyle = value;
+    this.context.fillRect(x + CELL_SIZE * x, y + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
+  };
 
-export const drawGame = model => {
-  model.state.forEach((row, rowIndex) => {
-    row.forEach((value, columnIndex) => {
-      drawCell(rowIndex, columnIndex, value);
+  initView () {
+    document.getElementById("game").appendChild(this.canvas);
+    this.canvas.setAttribute("height", GAME_SIZE * CELL_SIZE + GAME_SIZE - 1);
+    this.canvas.setAttribute("width", GAME_SIZE * CELL_SIZE + GAME_SIZE - 1);
+  };
+
+  update (modele) {
+    modele.state.forEach((row, rowIndex) => {
+      row.forEach((value, columnIndex) => {
+        this.drawCell(rowIndex, columnIndex, value);
+      });
     });
-  });
-};
+  };
 
-export const update = (model,listeChangements) => {
-  listeChangements.forEach(changement => {
-    drawCell(changement[1], changement[0], model.state[changement[1]][changement[0]])
-  });
-};
+}
