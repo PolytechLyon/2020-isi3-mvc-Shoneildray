@@ -21,3 +21,9 @@ export const drawGame = model => {
     });
   });
 };
+
+export const update = (model,listeChangements) => {
+  listeChangements.forEach(changement => {
+    drawCell(changement[1], changement[0], model.state[changement[1]][changement[0]])
+  });
+};
