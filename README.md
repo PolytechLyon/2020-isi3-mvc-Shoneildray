@@ -8,7 +8,7 @@ Nom/Prénom: `Nollet Bastien`
 
 Lien du codesandbox: `https://codesandbox.io/s/github/PolytechLyon/2020-isi3-mvc-Shoneildray?file=/README.md`
 
-> Pour générer un codesandbox associé à votre code, [suiver cette doc](https://codesandbox.io/docs/importing#import-from-github)
+> Pour générer un codesandbox associé à votre code, [suivez cette doc](https://codesandbox.io/docs/importing#import-from-github)
 
 ## Game of Life
 
@@ -20,13 +20,20 @@ Il est inventé par [John Horton Conway](https://fr.wikipedia.org/wiki/John_Hort
 1. Expliquer le design pattern MVC à l'aide d'un schéma à insérer directement ici. 
 Utiliser un outils commde Dia pour le représenter. Je veux **votre** schéma, pas un de ceux qu'on peut trouver sur le net.
 
-2. Expliquer ce pattern en complétant ce texte.
+![](img/MVC.png)
+
+2.Expliquer ce pattern en complétant ce texte.
 
 Le pattern MVC, vise à découpler le `modèle`, de la `vue` et du `contrôleur` afin de rendre le code plus `facile à modifier`.
 Les responsabilités ne sont alors plus `dispersées`.
 On peut ainsi changer l'aspect visuel de son application sans pour autant impacter l'`aspect logiciel`.
 
-3. Expliquer dans quels cas on doit privilégier le pattern MVC.
+3.Expliquer dans quels cas on doit privilégier le pattern MVC.
+
+Le patron de conception MVC est à privilégier dans tous les cas présentant une interface homme/machine, car cela permet 
+de séparer simplement les différentes fonctionnalités du code, et de pouvoir modifier facilement une partie du code sans
+ avoir à modifier le reste. Cela est donc à privilégier pour la conception de sites web, ou d'applications 
+interagissant avec l'utilisateur.
 
 ## A faire (obligatoire)
 
@@ -45,7 +52,9 @@ En quoi cela relève du design pattern ObserverObservable.
 L'usage d'une callback permet ici de `notifier` afin de dire à la _View_ de se redessiner.
 L'objet _Model_ n'a pas de lien avec `la vue` pourtant grâce à la `callback` il peut notifier la `vue`.
 
-2. Insérer ici un UML montrant le pattern Observer-Observable liés aux objects de ce TP.
+2.Insérer ici un UML montrant le pattern Observer-Observable liés aux objects de ce TP.
+
+![](img/obs.png)
 
 ## Optionel
 
